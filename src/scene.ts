@@ -1,5 +1,6 @@
 import { Project, Scene3D, PhysicsLoader, THREE} from "enable3d";
 import { loadRobot, RobotDictionary } from "./robots.ts";
+import { LumaSplatsThree } from "@lumaai/luma-web";
 
 class MainScene extends Scene3D {
   box: any;
@@ -44,23 +45,36 @@ class MainScene extends Scene3D {
     this.physics.debug?.enable();
 
     // position camera
-    this.camera.position.set(10, 10, 20);
+    this.camera.position.set(1.5, 1, 1.5);
 
     // blue box
-    this.box = this.add.box({ y: 2 }, { lambert: { color: "deepskyblue" } });
+    this.box = this.add.box({ y: 10 }, { lambert: { color: "deepskyblue" } });
 
     // pink box
-    this.physics.add.box({ y: 10 }, { lambert: { color: "hotpink" } });
+    //this.physics.add.box({ y: 10 }, { lambert: { color: "hotpink" } });
 
+    const splats = new LumaSplatsThree({
+      //source: 'https://lumalabs.ai/capture/6a1b0c89-15c1-4c7e-a708-7c6e4e2b5e54',
+      source: 'https://lumalabs.ai/capture/7f763b07-15bc-430e-84bf-9825f8e0c89e',
+      // controls the particle entrance animation
+      particleRevealEnabled: true,
+      enableThreeShaderIntegration: false
+
+    });
+    
+
+    splats.position.set(0, 0.3, 1);
+    splats.scale.set(0.25, 0.25, 0.25);
+    this.scene.add(splats);
     // green sphere
     const geometry = new THREE.SphereGeometry(0.8, 16, 16);
-    const spherematerial = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
-    const cube = new THREE.Mesh(geometry, spherematerial);
-    cube.position.set(0.2, 3, 0);
-    this.scene.add(cube);
+    const material = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
+    //const cube = new THREE.Mesh(geometry, material);
+    //cube.position.set(0.2, 3, 0);
+    //this.scene.add(cube);
     // add physics to an existing object
     //@ts-ignore
-    this.physics.add.existing(cube);
+    //this.physics.add.existing(cube);
 
     // Define the robot data
     const robotData: RobotDictionary = {

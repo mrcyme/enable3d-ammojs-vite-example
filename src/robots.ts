@@ -37,13 +37,13 @@ export async function loadRobot(robotData: RobotDictionary, scene: Scene3D) {
     await scene.load.gltf(part.mesh).then(gltf => {
       let object = new ExtendedObject3D()
       const mesh = gltf.scene.children[0]
-
+  
       // Set the converted position and quaternion
       object.position.copy(position);
       object.quaternion.copy(quaternion);
       object.add(mesh);
-
       scene.add.existing(object);
+      
       // Uncomment the following if physics are needed
       // scene.physics.add.existing(object, { shape: 'mesh' });
     });
